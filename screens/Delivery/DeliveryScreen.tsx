@@ -32,7 +32,7 @@ const DeliveryScreen = () => {
                     className="w-20 h-20"
                 />
             </View>
-            <Progress.Bar size={30} indeterminate={true}  color="#00CCBB" />
+            {/* <Progress.Bar size={30} indeterminate={true}  color="#00CCBB" /> */}
             <Text className='mt-3 text-gray-400'> Your Order To Restaurant is being prepared </Text>
         </View>
       </SafeAreaView>
