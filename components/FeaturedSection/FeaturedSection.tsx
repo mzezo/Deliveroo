@@ -1,8 +1,8 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, FlatList} from 'react-native';
 import React, {FC} from 'react';
 import {ArrowRightIcon} from 'react-native-heroicons/outline';
 import RestuarantCard from './RestuarantCard';
-
+import useRestaurants from '../../services/getRestaurants';
 interface FeaturedSectionProps {
   id: string;
   title: string;
@@ -16,69 +16,26 @@ const FeaturedSection: FC<FeaturedSectionProps> = ({
   describtion,
   featuredCategory,
 }) => {
+
+  const {data: restaurants, status, error} = useRestaurants();
+
   return (
     <View>
-      <View className="mt-4 flex-row items-center justify-between px-4">
-        <Text className="font-bold text-lg">{title}</Text>
-        <ArrowRightIcon color="#00CCBB" />
+      <View className="my-4">
+        <View className="mt-4 flex-row items-center justify-between px-4">
+          <Text className="font-bold text-lg">{title}</Text>
+          <ArrowRightIcon color="#00CCBB" />
+        </View>
+        <Text className="text-xs text-gray-500 px-4">{describtion}</Text>
       </View>
-      <Text className="text-xs text-gray-500 px-4">{describtion}</Text>
-      <ScrollView
-        horizontal
-        contentContainerStyle={{
-          paddingHorizontal: 15,
-        }}
+      <FlatList
+        data={restaurants}
+        renderItem={RestuarantCard}
+        keyExtractor={item => item._id}
+        ListEmptyComponent={() => <Text>looding...</Text>}
+        horizontal={true}
         showsHorizontalScrollIndicator={false}
-        className="pt-4">
-        <RestuarantCard
-          id="123"
-          imgUrl="https://links.papareact.com/gn7"
-          title="Yo! Sushi"
-          rating={4.5}
-          genre="Japanese"
-          address="123 Main St"
-          short_description="test Description"
-          dishes={[]}
-          lng="20.29"
-          lat="19.23"
-        />
-        <RestuarantCard
-          id="123"
-          imgUrl="https://links.papareact.com/gn7"
-          title="Yo! Sushi"
-          rating={4.5}
-          genre="Japanese"
-          address="123 Main St"
-          short_description="test Description"
-          dishes={[]}
-          lng="20.29"
-          lat="19.23"
-        />
-        <RestuarantCard
-          id="123"
-          imgUrl="https://links.papareact.com/gn7"
-          title="Yo! Sushi"
-          rating={4.5}
-          genre="Japanese"
-          address="123 Main St"
-          short_description="test Description"
-          dishes={[]}
-          lng="20.29"
-          lat="19.23"
-        />
-        <RestuarantCard
-          id="123"
-          imgUrl="https://links.papareact.com/gn7"
-          title="Yo! Sushi"
-          rating={4.5}
-          genre="Japanese"
-          address="123 Main St"
-          short_description="test Description"
-          dishes={[]}
-          lng="20.29"
-          lat="19.23"
-        />
-      </ScrollView>
+      />
     </View>
   );
 };

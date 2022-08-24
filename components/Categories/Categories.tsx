@@ -1,43 +1,21 @@
-import { ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import CategoryCard from './CategoryCard'
-import sanityClient from '../../sanity'
+import {FlatList, ScrollView, Text} from 'react-native';
+import React from 'react';
+import CategoryCard from './CategoryCard';
+import useCategories from '../../services/getCategories';
 
 const Categories = () => {
-
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    // sanityClient.fetch(
-    //   `*[_type == "category"]`
-    // ).then((data) => console.log('categories', data))
-
-    // sanityClient.fetch(
-    //   `*[_type == "category" && _id == $id][0]`, {id: '7511388b-856e-4dd2-8ad9-9ece787c8d69'}
-    // ).then((data) => console.log('categories2', data))
-
-
-  }, []);
+  const {data: categories, status, error} = useCategories();
 
   return (
-    <ScrollView 
-        contentContainerStyle={{
-            paddingHorizontal:15,
-            paddingTop: 15
-        }}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-    >
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-      <CategoryCard imgUrl='https://links.papareact.com/gn7' title="testing" />
-    </ScrollView>
-  )
-}
+    <FlatList
+      data={categories}
+      renderItem={CategoryCard}
+      keyExtractor={item => item._id}
+      ListEmptyComponent={() => <Text>looding...</Text>}
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+    />
+  );
+};
 
-export default Categories
+export default Categories;

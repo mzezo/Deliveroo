@@ -65,21 +65,7 @@ const HomeScreen = () => {
         <FeaturedSection
           id="12"
           title="Featured"
-          describtion="Top Products"
-          featuredCategory="featured"
-        />
-
-        <FeaturedSection
-          id="123"
-          title="Featured"
-          describtion="Top Products"
-          featuredCategory="featured"
-        />
-
-        <FeaturedSection
-          id="12345"
-          title="Featured"
-          describtion="Top Products"
+          describtion="Top Restaurants"
           featuredCategory="featured"
         />
       </ScrollView>

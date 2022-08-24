@@ -14,7 +14,7 @@ const DishItem = () => {
     dispatch(addToCart({id}))
   }
 
-  const removeItemFromCart = ({ id }) => {
+  const removeItemFromCart = () => {
     // if(!cartItems.length > 0) return;
     
     dispatch(removeFromCart({ id }))
@@ -50,7 +50,7 @@ const DishItem = () => {
         isPressed && (
             <View className='bg-white px-4'>
                 <View className='flex-row items-center space-x-2 pb-2'>
-                    <TouchableOpacity>
+                    <TouchableOpacity disabled={!cartItems?.length} onPress={removeItemFromCart}>
                         <MinusCircleIcon color={cartItems.length > 0 ? '#00CCBB' : 'gray'} size={40} />
                     </TouchableOpacity>
                     <Text> { cartItems.length } </Text>

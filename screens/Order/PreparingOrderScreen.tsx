@@ -15,12 +15,13 @@ const PreparingOrderScreen = () => {
 
   return (
     <SafeAreaView className='bg-[#00CCBB] flex-1 justify-center items-center'>
-        <Animatable.Image 
-            source={require('../../assets/orderloading.gif')}
+        {/* <Animatable.Image 
+            // source={require('../../assets/orderloading.gif')}
+            source={"https://static.vecteezy.com/system/resources/previews/000/273/542/original/online-food-order-concept-vector.jpg"}
             animation="slideInUp"
             iterationCount={1}
             className="w-96 h-96"
-        />
+        /> */}
         <Animatable.Text
             animation="slideInUp"
             iterationCount={1}
