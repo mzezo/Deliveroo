@@ -19,7 +19,7 @@ const CategoryCard: FC<CategoryCardProps> = ({ item }) => {
             }}
             className='h-36 w-36 rounded'
         />
-        <Text className='absolute bottom-1 left-1 text-white font-bold'>{ item.title }</Text>
+        <Text className='absolute bottom-1 left-4 text-white font-bold text-lg'>{ item.title }</Text>
     </TouchableOpacity>
   )
 }

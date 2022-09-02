@@ -7,6 +7,6 @@ async function getCategory(id: string) {
     )
 }
 
-export default function useCategories() {
-    return useAsync(getCategory)
+export default function useCategory(id: string) {
+    return useAsync(() => getCategory(id))
 }

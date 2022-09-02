@@ -4,6 +4,7 @@ export const useAsync = (asyncFunction: any, immediate = true) => {
     const [status, setStatus] = useState("idle");
     const [data, setData] = useState<any[]>([]);
     const [error, setError] = useState(null);
+
     // The execute function wraps asyncFunction and
     // handles setting state for pending, data, and error.
     // useCallback ensures the below useEffect is not called
@@ -29,6 +30,6 @@ export const useAsync = (asyncFunction: any, immediate = true) => {
       if (immediate) {
         execute();
       }
-    }, [execute, immediate]);
+    }, [immediate]);
     return { execute, status, data, error };
   };

@@ -3,7 +3,11 @@ import sanityClient from "../sanity";
 
 async function getRestaurants() {
   return await sanityClient.fetch(
-    `*[_type == "restaurant"]`
+    `*[_type == "restaurant"] {
+      ...,
+      dishes[]->,
+      type->
+    }`
   )
 }
 

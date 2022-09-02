@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React, {useLayoutEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {
   AdjustmentsIcon,
   ChevronDownIcon,
@@ -17,13 +17,13 @@ import {
 import Categories from '../../components/Categories/Categories';
 import FeaturedSection from '../../components/FeaturedSection/FeaturedSection';
 
-const HomeScreen = () => {
-  const navigation = useNavigation();
+const HomeScreen = ({navigation} : any) => {
+  // const navigation = useNavigation();
 
   useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: false,
-    });
+    // navigation.setOptions({
+    //   headerShown: false,
+    // });
   }, []);
 
   return (
@@ -67,6 +67,7 @@ const HomeScreen = () => {
           title="Featured"
           describtion="Top Restaurants"
           featuredCategory="featured"
+          navigation={navigation}
         />
       </ScrollView>
     </SafeAreaView>
