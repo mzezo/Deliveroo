@@ -3,22 +3,22 @@ import React, { useState } from 'react';
 import Currency from 'react-currency-formatter';
 import { MinusCircleIcon, PlusCircleIcon } from 'react-native-heroicons/outline';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, removeFromCart, selectCartItem, selectCartItems } from '../../redux/cart/cartSlice';
+import { addToCart, removeFromCart, selectCartItem } from '../../redux/cart/cartSlice';
 import { urlFor } from '../../sanity';
+import { RootState } from '../../redux/store';
 
 const DishItem = ({ id, dishData}: any) => {
-  console.log('DishItem', dishData)
+  console.log('dishData', dishData)
+
   const [isPressed, setIsPressed] = useState(false);
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => selectCartItem(state, id))
+  const cartItem = useSelector((state: RootState) => selectCartItem(state, id))
 
   const addItemToCartHandler = () => {
-    dispatch(addToCart({id}))
+    dispatch(addToCart({ id, item: {...cartItem, price: dishData?.price, id: dishData?._id} }))
   }
 
-  const removeItemFromCart = () => {
-    // if(!cartItems.length > 0) return;
-    
+  const removeItemFromCart = () => {    
     dispatch(removeFromCart({ id }))
   }
 
@@ -56,10 +56,10 @@ const DishItem = ({ id, dishData}: any) => {
         isPressed && (
             <View className='bg-white px-4'>
                 <View className='flex-row items-center space-x-2 pb-2'>
-                    <TouchableOpacity disabled={!cartItems?.length} onPress={removeItemFromCart}>
-                        <MinusCircleIcon color={cartItems.length > 0 ? '#00CCBB' : 'gray'} size={40} />
+                    <TouchableOpacity onPress={removeItemFromCart}>
+                        <MinusCircleIcon color={cartItem?.quantity! > 0 ? '#00CCBB' : 'gray'} size={40} />
                     </TouchableOpacity>
-                    <Text> { cartItems.length } </Text>
+                    <Text> { cartItem?.quantity || 0 } </Text>
                     <TouchableOpacity onPress={addItemToCartHandler}>
                         <PlusCircleIcon color="#00CCBB" size={40} />
                     </TouchableOpacity>
