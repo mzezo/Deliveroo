@@ -1,14 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
+import { IRestaurant } from '../../components/FeaturedSection/Restaurant';
+export interface State {
+    restaurant: IRestaurant
+}
 
-const initialState = {
-    restaurant: { }
+const initialState: State = {
+    restaurant: { } as IRestaurant
 }
 
 export const cartSlice = createSlice({
     name: 'restaurant',
     initialState,
     reducers: {
-        setRestaurant: (state, action) => {
+        setRestaurant: (state, action: PayloadAction<IRestaurant>) => {
             state.restaurant = action.payload
         }
     }
@@ -16,6 +21,6 @@ export const cartSlice = createSlice({
 
 export const { setRestaurant } = cartSlice.actions;
 
-export const selectRestaurant = (state) => state.restaurant.restaurant;
+export const selectRestaurant = (state: RootState) => state.restaurant.restaurant;
 
 export default cartSlice.reducer;

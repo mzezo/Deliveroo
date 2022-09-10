@@ -12,7 +12,7 @@ const CartNotification = () => {
   const navigation = useNavigation();
 
   return (
-    <View className='absolute bottom-10 w-full z-50'>
+    <View className='absolute bottom-8 w-full z-50'>
       <TouchableOpacity
         //@ts-ignore
         onPress={() => navigation.navigate('Cart', {})}

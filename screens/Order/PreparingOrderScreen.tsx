@@ -9,23 +9,22 @@ const PreparingOrderScreen = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate("Delivery")
-        }, 4000)
+            navigation.navigate('Delivery')
+        }, 5000)
     }, [])
 
   return (
     <SafeAreaView className='bg-[#00CCBB] flex-1 justify-center items-center'>
-        {/* <Animatable.Image 
-            // source={require('../../assets/orderloading.gif')}
-            source={"https://static.vecteezy.com/system/resources/previews/000/273/542/original/online-food-order-concept-vector.jpg"}
+        <Animatable.Image 
+            source={require('../../assets/online-food-order-concept-vector.webp')}
             animation="slideInUp"
             iterationCount={1}
             className="w-96 h-96"
-        /> */}
+        />
         <Animatable.Text
             animation="slideInUp"
             iterationCount={1}
-            className="text-lg my-10 text-white font-bold text-center"
+            className="text-lg m-10 text-white font-bold text-center"
         >
             Waitting for restaurant to accept your order!
         </Animatable.Text>   

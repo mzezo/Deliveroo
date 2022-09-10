@@ -5,6 +5,7 @@ export interface Item {
     restaurantId: string | number;
     price: number;
     quantity?: number;
+    [key: string]: any;
 }
 export interface State {
     items: Record<string, Item>;
@@ -25,17 +26,15 @@ export const cartSlice = createSlice({
         addToCart: (state, action: PayloadAction<{id: string, item: Item}>) => {
             const { id, item } = action.payload;
             state.total += item?.price
-            console.log('addToCart', item)
             if(!state.items[id]){
                 state.items[id] = { ...item, quantity: 1 }
             }else {
                 state.items[id] = { ...item, quantity: item?.quantity! + 1 }
-                
             }
         },
         removeFromCart: (state, action) => {
             const { id } = action.payload;
-            state.total -= state.items[id]?.price
+            state.total -= state.items[id]?.price ?? 0
             if(state.items[id]?.quantity! > 1){
                 state.items[id] = { ...state.items[id], quantity: state.items[id]?.quantity! - 1}
             }else {
@@ -51,7 +50,11 @@ export const selectCartItems = (state: RootState) => state.cart.items
 
 export const selectCartItem = (state: RootState, id: string) => state.cart.items[id]
 
-// export const selectCartTotal = (state: RootState) => Object.keys(state.cart.items).map(element => state.cart.items[element].price)
+export const selectCartItemTotal = (state: RootState, id: string) => state.cart.items[id]?.quantity! *  state.cart.items[id]?.price
+
+export const selectCartItemsTotal = (state: RootState) => Object.keys(state.cart.items).reduce((total, itemKey) => total + state.cart.items[itemKey].quantity! * state.cart.items[itemKey].price, 0)
+
+export const selectCartItemsQuantity = (state: RootState) => Object.keys(state.cart.items).reduce((sum, itemKey) => sum + state.cart.items[itemKey].quantity!, 0)
 
 export const selectCartTotal = (state: RootState) => state.cart.total
 

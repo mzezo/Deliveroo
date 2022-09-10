@@ -12,16 +12,9 @@ const CartScreen = () => {
   const restaurant = useSelector(selectRestaurant);
   const items = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
-  const [groupedItemsInCart, setGroupedItemsInCart] = useState([]);
   const dispatch = useDispatch();
 
-  useMemo(() => {
-    const groupedItems = items.reduce((results, item) => {
-        (results[item.id] = results[item.id] || []).push(item);
-        return results;
-    }, {});
-    setGroupedItemsInCart(groupedItems);
-  }, [])
+  console.log('CartScreen', items)
 
   return (
     <SafeAreaView className='flex-1 bg-white'>
@@ -29,11 +22,11 @@ const CartScreen = () => {
         <View className='p-5 border-b border-[#00CCBB] bg-white shadow-xs'>
           <View>
             <Text className='text-lg font-bold text-center'>Cart</Text>
-            <Text className='text-center text-gray-400'>"Restaurant Title"</Text>
+            <Text className='text-center text-gray-400'>{ restaurant?.name }</Text>
           </View>
           <TouchableOpacity
             //@ts-ignore
-            onPress={navigation.goBack()}
+            // onPress={navigation.goBack()}
             //@ts-ignore
             className="rounded-full bg-gray-100 absolute top-3 right-5"
           >
@@ -53,28 +46,27 @@ const CartScreen = () => {
           </TouchableOpacity>
         </View>
         <ScrollView className='divide-y divide-gray-300'>
-          {Object.entries(groupedItemsInCart).map(([key, items]) => (
+          {Object.values(items).map((item) => (
             <View 
-              key={key}
+              key={item.id}
               className='flex-row items-center space-x-3 bg-white py-2 px-5'  
             >
-              <Text className='text-[#00CCBB]'>{items.length} x</Text>
+              <Text className='text-[#00CCBB]'>{item?.quantity} x</Text>
               <Image 
                 source={{
                   uri: ''
                 }}
                 className='w-12 h-12 rounded-full'
               />
-              <Text className='flex-1'>{items[0]?.name}</Text>
+              <Text className='flex-1'>{item?.name}</Text>
 
               <Text className='text-gray-600'>
-                <Currency  quantity={items[0]?.price} currency="EGP" />
+                <Currency quantity={item?.price * item?.quantity!} currency="EGP" />
               </Text>
-
               <TouchableOpacity>
                 <Text
                   className='text-[#00CCBB] text-xs'
-                  onPress={() => dispatch(removeFromCart({id: key}))}
+                  onPress={() => dispatch(removeFromCart({id: item.id}))}
                 >
                   Remove
                 </Text>
@@ -90,14 +82,12 @@ const CartScreen = () => {
                <Currency quantity={cartTotal} currency="EGP" />
              </Text>
           </View>
-
           <View className='flex-row justify-between'>
              <Text className='text-gray-400'>Delivery Fee</Text>
              <Text className='text-gray-400'>
                <Currency quantity={9.99} currency="EGP" />
              </Text>
           </View>
-
           <View className='flex-row justify-between'>
              <Text >Order Total</Text>
              <Text className='font-extrabold'>

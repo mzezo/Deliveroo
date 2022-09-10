@@ -26,10 +26,8 @@ const RestaurantScreen = () => {
 
   // const { data: restaurant, status, error } = useRestaurant(params?.id);
 
-  console.log('RestaurantScreen', restaurent);
-
   useEffect(() => {
-    // dispatch(setRestaurant({_id}))
+    dispatch(setRestaurant({ ...restaurent }))
     // getRestaurant(params?.id).then((res) => console.log('RestaurantScreen res', res)).catch((err) => console.log('err', err))
   }, []);
 
@@ -40,7 +38,6 @@ const RestaurantScreen = () => {
         <View className="relative">
           <Image
             source={{
-              // uri: 'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-Clipart.png',
               uri: urlFor(restaurent?.image).url(),
             }}
             className="w-full h-56 bg-gray-300 p-4"
@@ -88,7 +85,6 @@ const RestaurantScreen = () => {
         </View>
         <View className="pb-36">
           <Text className="px-4 pt-6 mb-3 font-bold text-xl"> Menu </Text>
-
           {restaurent?.dishes.map((dish: any) => (
             <DishItem key={dish._id} id={dish._id} dishData={dish} />
           ))}
