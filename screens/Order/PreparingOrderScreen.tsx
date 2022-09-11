@@ -16,10 +16,10 @@ const PreparingOrderScreen = () => {
   return (
     <SafeAreaView className='bg-[#00CCBB] flex-1 justify-center items-center'>
         <Animatable.Image 
-            source={require('../../assets/online-food-order-concept-vector.webp')}
+            source={require('../../assets/order-delivery.png')}
             animation="slideInUp"
             iterationCount={1}
-            className="w-96 h-96"
+            className="w-96 h-96 bg-cover"
         />
         <Animatable.Text
             animation="slideInUp"

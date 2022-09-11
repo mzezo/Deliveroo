@@ -6,6 +6,7 @@ import { selectRestaurant } from '../../redux/restaurant/restaurantSlice';
 import { removeFromCart, selectCartItem, selectCartItems, selectCartTotal } from '../../redux/cart/cartSlice';
 import { XCircleIcon } from 'react-native-heroicons/outline';
 import Currency from "react-currency-formatter"
+import { urlFor } from '../../sanity';
 
 const CartScreen = () => {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ const CartScreen = () => {
           </View>
           <TouchableOpacity
             //@ts-ignore
-            // onPress={navigation.goBack()}
+            onPress={() => navigation.goBack()}
             //@ts-ignore
             className="rounded-full bg-gray-100 absolute top-3 right-5"
           >
@@ -54,7 +55,7 @@ const CartScreen = () => {
               <Text className='text-[#00CCBB]'>{item?.quantity} x</Text>
               <Image 
                 source={{
-                  uri: ''
+                  uri: urlFor(item?.image).url(),
                 }}
                 className='w-12 h-12 rounded-full'
               />

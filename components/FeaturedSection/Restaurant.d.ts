@@ -7,5 +7,7 @@ export interface IRestaurant {
     name: string
     rating: number
     short_description: string
-    dishes: any[]
+    dishes: any[],
+    lat: number,
+    lng: number
 }
