@@ -37,7 +37,7 @@ const CartScreen = () => {
         <View className='flex-row items-center space-x-4 px-4 py-3 bg-white my-5'>
           <Image
             source={{
-              uri: ''
+              uri: 'https://links.papereact.com/fls'
             }}
             className="h-7 w-7 rounded-full p-4 bg-gray-300"
           />

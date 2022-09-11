@@ -39,8 +39,8 @@ const DeliveryScreen = () => {
       </SafeAreaView>
       <MapView
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: restaurant?.lat,
+          longitude: restaurant?.lng,
           latitudeDelta: 0.005,
           longitudeDelta: 0.005,
         }}
@@ -49,8 +49,8 @@ const DeliveryScreen = () => {
       >
         <Marker
           coordinate={{
-            latitude: 37.78825,
-            longitude: -122.4324
+            latitude: restaurant?.lat,
+            longitude: restaurant?.lng
           }}
         />
       </MapView>
