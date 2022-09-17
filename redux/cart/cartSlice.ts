@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 export interface Item {
     id: string | number;
@@ -57,5 +57,10 @@ export const selectCartItemsTotal = (state: RootState) => Object.keys(state.cart
 export const selectCartItemsQuantity = (state: RootState) => Object.keys(state.cart.items).reduce((sum, itemKey) => sum + state.cart.items[itemKey].quantity!, 0)
 
 export const selectCartTotal = (state: RootState) => state.cart.total
+
+export const selectMemoizedItemsQuantity  = createSelector(
+    (state: RootState) => state.cart.items,
+    (items) => Object.keys(items).reduce((sum, itemKey) => sum + items[itemKey].quantity!, 0)
+);
 
 export default cartSlice.reducer

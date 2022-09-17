@@ -1,7 +1,9 @@
 import 'react-native';
-import Cartslice, { addToCart, removeFromCart } from './cartSlice'
+import Cartslice, { addToCart, removeFromCart, 
+    selectCartItemsTotal, selectCartItemsQuantity, selectMemoizedItemsQuantity } from './cartSlice'
 import { Item, State } from './cartSlice'
 import { RootState } from "../store";
+import { IRestaurant } from '../../components/FeaturedSection/Restaurant';
 
 describe('cart slice', () => {
 
@@ -55,5 +57,91 @@ describe('cart slice', () => {
       expect(result.items).toMatchObject({})
     });
   })
+
+  describe("selectors", () => {
+    beforeEach(() => {
+      selectMemoizedItemsQuantity.resetRecomputations();
+    })
+
+    it('should return 0 with empty cart', () => {
+      const initialState: RootState = {
+        cart: {
+          items: { },
+          isEmpty: true,
+          total: 0
+        },
+        restaurant: { restaurant: {}  as IRestaurant }
+      }
+      const result = selectCartItemsTotal(initialState);
+      expect(result).toEqual(0);
+    })
+
+    it('test calculate cart items total', () => {
+      const initialState: RootState = {
+        cart: {
+          items: { abc : {id: 'abc', quantity: 4, price: 100} as Item,
+          abcd : {id: 'abcd', quantity: 2, price: 60} as Item },
+          isEmpty: true,
+          total: 0
+        },
+        restaurant: { restaurant: {}  as IRestaurant }
+      }
+      const result = selectCartItemsTotal(initialState);
+      expect(result).toEqual(520);
+    })
+
+    it('test calculate cart items quantity', () => {
+      const initialState: RootState = {
+        cart: {
+          items: { abc : {id: 'abc', quantity: 4, price: 100} as Item,
+          abcd : {id: 'abcd', quantity: 2, price: 60} as Item },
+          isEmpty: true,
+          total: 0
+        },
+        restaurant: { restaurant: {}  as IRestaurant }
+      }
+      const result = selectCartItemsQuantity(initialState);
+      expect(result).toEqual(6);
+    })
+
+    it('should not compute again with same state', ()=> {
+      const initialState: RootState = {
+        cart: {
+          items: { abc : {id: 'abc', quantity: 4, price: 100} as Item,
+          abcd : {id: 'abcd', quantity: 2, price: 60} as Item },
+          isEmpty: true,
+          total: 0
+        },
+        restaurant: { restaurant: {}  as IRestaurant }
+      }
+      const result = selectMemoizedItemsQuantity(initialState);
+      expect(result).toEqual(6);
+      expect(selectMemoizedItemsQuantity.recomputations()).toEqual(1);
+      selectMemoizedItemsQuantity(initialState);
+      expect(selectMemoizedItemsQuantity.recomputations()).toEqual(1);
+    })
+
+    it('should Recompute with different state', ()=> {
+      const initialState: RootState = {
+        cart: {
+          items: { abc : {id: 'abc', quantity: 4, price: 100} as Item,
+          abcd : {id: 'abcd', quantity: 2, price: 60} as Item },
+          isEmpty: true,
+          total: 0
+        },
+        restaurant: { restaurant: {}  as IRestaurant }
+      }
+      const result = selectMemoizedItemsQuantity(initialState);
+      expect(result).toEqual(6);
+      expect(selectMemoizedItemsQuantity.recomputations()).toEqual(1);
+      selectMemoizedItemsQuantity({...initialState, cart: {  items: { abc : {id: 'abc', quantity: 2, price: 100} as Item,
+      abcd : {id: 'abcd', quantity: 2, price: 60} as Item },
+      isEmpty: true,
+      total: 0}});
+      expect(selectMemoizedItemsQuantity.recomputations()).toEqual(2);
+    })
+    
+  })
+  
 })
 
